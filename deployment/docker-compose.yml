@@ -1,0 +1,17 @@
+version: "3.9"
+
+
+services:
+  app:
+    build: 
+      dockerfile: ./deployment/Dockerfile
+      context: ../
+    ports:
+      - "8000:8000"
+    environment:
+      - SRV_REDIS_DSN=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_started
+  redis:
+    image: redis:latest
